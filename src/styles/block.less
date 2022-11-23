@@ -1,0 +1,48 @@
+.myModal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+}
+
+.myModalActive {
+  width: 100vw;
+  height: 500vh;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.5);
+}
+
+
+.container {
+  width: 50vw;
+  position: fixed;
+  top: calc(50vh - 250px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: @inputBackgroundColor;
+  box-shadow: @inputBoxShadow;
+}
+
+.contentTodo {
+  margin:2% 0 0 10%;
+  width: 80%;
+}
+
+.dataAndFile {
+  width: 80%;
+  margin-left: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttonSave {
+  margin-left: 10%;
+  width: 80%;
+}

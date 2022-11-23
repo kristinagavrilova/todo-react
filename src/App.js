@@ -1,14 +1,17 @@
-import './App.css';
-import ModalWindow from "./modal/ModalWndow";
+import './styles/main.less';
+import TodoList from "./components/TodoList";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-         <ModalWindow/>
-      </header>
-    </div>
-  );
+
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <TodoList/>
+
+            </header>
+        </div>
+    );
 }
 
 export default App;

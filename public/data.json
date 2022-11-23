@@ -1,0 +1,10 @@
+[
+  {"id":1, "title":"Homework", "description":"Сделать домашнее задание по математике",
+    "deadline": "23.11.2022", "isDone": false},
+  {"id":2, "title":"Homework1", "description":"Сделать домашнее задание по физике",
+    "deadline": "24.11.2022", "isDone": true},
+  {"id":3, "title":"Homework2", "description":"Сделать домашнее задание по химии",
+    "deadline": "25.11.2022", "isDone": false},
+  {"id":4, "title":"Homework3", "description":"Сделать домашнее задание по биологии",
+    "deadline": "22.11.2022", "isDone": true}
+]

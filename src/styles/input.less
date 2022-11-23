@@ -1,0 +1,25 @@
+.input {
+  display:block;
+  width:100%;
+  margin:10px 0;
+  border:0;
+  outline: none;
+  padding:15px;
+  background-color: @inputBackgroundColor;
+  box-shadow: @inputBoxShadow;
+  transition: @inputTransition;
+  font-size: @inputFontSize;
+
+  &:hover {
+    box-shadow:@inputBoxShadowActive;
+  }
+}
+
+.inputEnterTask {
+  resize: both;
+  overflow: auto;
+}
+
+.inputFile {
+  width:60%;
+}
