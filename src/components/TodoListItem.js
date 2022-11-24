@@ -1,5 +1,6 @@
 import './../styles/modal.less';
 import FilesIcon from "../icons/FilesIcon";
+import dayjs from "dayjs";
 
 const TodoListItem = (props) => {
 
@@ -7,12 +8,12 @@ const TodoListItem = (props) => {
 
 
     return (
-                <li className='liToDo'>
+                <li className={dayjs(deadline).diff(dayjs()) >= 0 ? 'liToDo' : 'liToDo red'}>
                     <input type="checkbox" className='inputCheck' checked={isDone}
                            onClick={() => props.changeStatus(id)}/>
                     <h2 className='titleTaskLi'>{title}</h2>
                     <div className='text'>{description}</div>
-                    <div className='textData'>Выполнить до: {deadline}</div>
+                    <div className='textData'>Выполнить до: {dayjs(deadline).format('DD/MM/YYYY') }</div>
                     <FilesIcon/>
                     <div className='btnArea'>
 

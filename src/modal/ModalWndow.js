@@ -16,7 +16,7 @@ const ModalWindow = (props) => {
             id: uuidv4(),
             title: inputTitle.current.value,
             description: inputDescription.current.value,
-            data: inputData.current.value,
+            deadline: inputData.current.value,
             isDone: false
         }
         props.addTodo(objTodo);
