@@ -17,7 +17,7 @@ const TodoListItem = (props) => {
                     <FilesIcon/>
                     <div className='btnArea'>
 
-                        <button className='btn' onClick={() => props.showModal()}>Редактировать</button>
+                        <button className='btn' onClick={() => props.updateTodo(id)}>Редактировать</button>
                         <button className='btn' onClick={() => props.deleteTodo(id)}>Удалить</button>
                     </div>
                 </li>

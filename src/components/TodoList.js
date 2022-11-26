@@ -3,12 +3,15 @@ import TodoListItem from "./TodoListItem";
 import {useEffect, useState} from "react";
 import ModalWindow from "../modal/ModalWndow";
 import {firestore} from "../firebase";
-import {doc, addDoc, getDocs, deleteDoc, collection} from "firebase/firestore/lite";
+import {addDoc, getDocs, deleteDoc, collection, updateDoc} from "firebase/firestore";
+import {uploadBytesResumable} from "firebase/storage";
 
 const TodoList = () => {
 
     const [todoList, setTodoList] = useState([])
     const [modal, setModal] = useState(false)
+    const [updateTodoItem, setUpdateTodoItem] = useState(null)
+
 
     const ref = collection(firestore, "todos");
 
@@ -20,22 +23,65 @@ const TodoList = () => {
     }, []);
 
     const deleteTodo = (id) => {
-        let find = todoList.find(todo => todo.id === id);
-        let newTodo = todoList.filter(todo => todo.id !== id)
-        setTodoList(newTodo);
+        getDocs(ref).then(r => {
+            let deleteDocElement = r.docs.find(element => element.data().id === id);
+            deleteDoc(deleteDocElement.ref)
+                .then(e => {
+                    let newTodoArr = todoList.filter(item => item.id !== id)
+                    setTodoList(newTodoArr)
+                })
+                .catch(err => {
+                    alert("Не удалось удалить задачу")
+                })
+        })
+    }
+
+    const updateTodo = (todo) => {
+        getDocs(ref).then(r => {
+            let updateDocElement = r.docs.find(element => element.data().id === todo.id);
+            updateDoc(updateDocElement.ref, todo)
+                .then(() => {
+                    closeModal()
+                    let newTodo = todoList.map(savedTodo => {
+                        if (savedTodo.id === todo.id) {
+                            return todo
+
+                        }
+                        return savedTodo;
+                    })
+                    setTodoList(newTodo);
+                })
+                .catch(err => {
+                    alert("Не удалось отредактировать задачу")
+                })
+        })
+    }
+
+    const openUpdateTodoModal = (id) => {
+        let updateTodo = todoList.find(element => element.id === id)
+        setUpdateTodoItem(updateTodo);
+        showModal();
     }
 
     const changeStatus = (id) => {
-        let newTodo = todoList.map(todo => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    isDone: !todo.isDone
-                }
-            }
-            return todo;
+        getDocs(ref).then(r => {
+            let updatedDocElement = r.docs.find(element => element.data().id === id);
+            let todo = updatedDocElement.data();
+            todo.isDone = !todo.isDone
+            updateDoc(updatedDocElement.ref, todo)
+                .then(() => {
+                    let newTodo = todoList.map(savedTodo => {
+                        if (savedTodo.id === todo.id) {
+                            return todo
+                        }
+                        return savedTodo;
+                    })
+                    setTodoList(newTodo);
+                })
+                .catch(err => {
+                    alert("Не удалось отредактировать задачу")
+                })
         })
-        setTodoList(newTodo);
     }
 
     const showModal = () => {
@@ -47,7 +93,8 @@ const TodoList = () => {
     }
 
     const addTodo = (obj) => {
-        addDoc(ref, obj).then(() => {
+        addDoc(ref, obj).then(docRef => {
+            obj.docRef = docRef;
             todoList.push(obj)
             setTodoList([...todoList])
         }).catch(() => {
@@ -62,6 +109,9 @@ const TodoList = () => {
             <ModalWindow visible={modal}
                          closeModal={closeModal}
                          addTodo={addTodo}
+                         updateTodo={updateTodo}
+                         updateTodoItem={updateTodoItem}
+
             />
             <button className='btn bthAddTask' onClick={showModal}>Добавить задачу</button>
             <div className='contentToDo'>
@@ -71,7 +121,7 @@ const TodoList = () => {
                         todoItem={todo}
                         deleteTodo={deleteTodo}
                         changeStatus={changeStatus}
-                        showModal={showModal}
+                        updateTodo={openUpdateTodoModal}
                     />)}
                 </ul>
             </div>
