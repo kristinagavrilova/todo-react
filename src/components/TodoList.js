@@ -92,8 +92,7 @@ const TodoList = () => {
     }
 
     const addTodo = (obj) => {
-        addDoc(ref, obj).then(docRef => {
-            obj.docRef = docRef;
+        addDoc(ref, obj).then(() => {
             todoList.push(obj)
             setTodoList([...todoList])
         }).catch(() => {
@@ -117,6 +116,7 @@ const TodoList = () => {
 
                 <ul className='ulToDo'>
                     {todoList.map(todo => <TodoListItem
+                        key={todo.id}
                         todoItem={todo}
                         deleteTodo={deleteTodo}
                         changeStatus={changeStatus}

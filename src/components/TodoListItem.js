@@ -10,10 +10,20 @@ const TodoListItem = (props) => {
         window.open(fileUrl)
     }
 
+    const getLiClass = () => {
+        let classArr = ['liToDo']
+        if (isDone) {
+            classArr.push('liOpacity')
+        } else if (dayjs(deadline).diff(dayjs()) <= 0) {
+            classArr.push('red')
+        }
+      return classArr.join(' ')
+    }
+
     return (
-                <li className={dayjs(deadline).diff(dayjs()) >= 0 ? 'liToDo' : 'liToDo red'}>
+                <li className={getLiClass()}>
                     <input type="checkbox" className='inputCheck' checked={isDone}
-                           onClick={() => props.changeStatus(id)}/>
+                           onChange={()=> props.changeStatus(id)}/>
                     <h2 className='titleTaskLi'>{title}</h2>
                     <div className='text'>{description}</div>
                     <div className='textData'>Выполнить до: {dayjs(deadline).format('DD/MM/YYYY') }</div>
