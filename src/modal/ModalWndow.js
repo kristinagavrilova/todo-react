@@ -2,15 +2,14 @@ import './../styles/modal.less';
 import CloseIcon from "../icons/CloseIcon";
 import {v4 as uuidv4} from 'uuid';
 import {useEffect, useRef, useState} from "react";
-import {collection} from "firebase/firestore";
 import {storage} from "../firebase";
-import {uploadBytesResumable, ref} from "firebase/storage";
+import {uploadBytesResumable, ref, getDownloadURL} from "firebase/storage";
 
 const ModalWindow = (props) => {
 
-    const [files, setFiles] = useState([])
+    const [fileUrl, setFileUrl] = useState(null)
+    const [loading, setLoading] = useState(false)
 
-    const fileRef = ref(storage, `files/todos`);
 
     const inputTitle = useRef()
     const inputDescription = useRef()
@@ -18,11 +17,18 @@ const ModalWindow = (props) => {
     const inputFile = useRef()
 
     const addFile = () => {
-        console.log(inputFile.current.files[0])
-        uploadBytesResumable(fileRef, inputFile.current.files[0]).then(r =>{
-            console.log(r)
+        setLoading(true)
+        let fileName = inputFile.current.files[0].name;
+        const fileRef = ref(storage, `files/${fileName}`);
+        uploadBytesResumable(fileRef, inputFile.current.files[0]).then(r => {
+            getDownloadURL(r.ref).then(url => {
+                setFileUrl(url)
+                setLoading(false)
+            })
         }).catch(e => {
-            console.log(e)
+            alert('Не удалось загрузить файл')
+        }).finally(()=>{
+            setLoading(false)
         })
     }
 
@@ -44,6 +50,7 @@ const ModalWindow = (props) => {
                 description: inputDescription.current.value,
                 deadline: inputData.current.value,
                 isDone: false,
+                fileUrl: fileUrl
             }
             props.updateTodo(objTodo);
         } else {
@@ -53,7 +60,8 @@ const ModalWindow = (props) => {
                 description: inputDescription.current.value,
                 deadline: inputData.current.value,
                 docRef: null,
-                isDone: false
+                isDone: false,
+                fileUrl: fileUrl
             }
             props.addTodo(objTodo);
         }
@@ -73,12 +81,11 @@ const ModalWindow = (props) => {
                     <label> Дата окончания:
                         <input ref={inputData} className='input inputDataChange' type="date"/>
                     </label>
-
-                    <input ref={inputFile} className='input inputFile' type="file" multiple
-                           onChange={() => addFile()}/>
+                    <input ref={inputFile} className='input inputFile' type="file" onChange={() => addFile()}/>
                 </div>
                 <div className='buttonSave'>
-                    <button className='btn saveTodo' onClick={() => saveTodo()}>Сохранить</button>
+                    <button disabled={loading} className={loading ? 'btn saveTodo btnDisable':'btn saveTodo'}
+                            onClick={() => saveTodo()}>Сохранить</button>
                 </div>
             </div>
         </div>
