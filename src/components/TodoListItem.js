@@ -17,9 +17,8 @@ const TodoListItem = (props) => {
                     <h2 className='titleTaskLi'>{title}</h2>
                     <div className='text'>{description}</div>
                     <div className='textData'>Выполнить до: {dayjs(deadline).format('DD/MM/YYYY') }</div>
-                    <FilesIcon onClick={() => downlandFile()}/>
+                    {fileUrl && <FilesIcon onClick={downlandFile}/>}
                     <div className='btnArea'>
-
                         <button className='btn' onClick={() => props.updateTodo(id)}>Редактировать</button>
                         <button className='btn' onClick={() => props.deleteTodo(id)}>Удалить</button>
                     </div>

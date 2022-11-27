@@ -92,7 +92,6 @@ const ModalWindow = (props) => {
 
     )
 
-
 }
 
 export default ModalWindow;

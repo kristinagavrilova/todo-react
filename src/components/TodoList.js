@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import ModalWindow from "../modal/ModalWndow";
 import {firestore} from "../firebase";
 import {addDoc, getDocs, deleteDoc, collection, updateDoc} from "firebase/firestore";
-import {uploadBytesResumable} from "firebase/storage";
 
 const TodoList = () => {
 
