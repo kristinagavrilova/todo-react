@@ -21,6 +21,10 @@ const TodoList = () => {
         })
     }, []);
 
+    /**
+     * удаление задачи
+     * @param id задачи
+     */
     const deleteTodo = (id) => {
         getDocs(ref).then(r => {
             let deleteDocElement = r.docs.find(element => element.data().id === id);
@@ -34,7 +38,10 @@ const TodoList = () => {
                 })
         })
     }
-
+    /**
+     * Изменение задачи
+     * @param todo - измененная задача
+     */
     const updateTodo = (todo) => {
         getDocs(ref).then(r => {
             let updateDocElement = r.docs.find(element => element.data().id === todo.id);
@@ -55,13 +62,20 @@ const TodoList = () => {
                 })
         })
     }
-
+    /**
+     * открывание модального окна для редактирования задачи
+     * @param id задачи
+     */
     const openUpdateTodoModal = (id) => {
         let updateTodo = todoList.find(element => element.id === id)
         setUpdateTodoItem(updateTodo);
         showModal();
     }
 
+    /**
+     * изменение готовности задачи
+     * @param id задачи
+     */
     const changeStatus = (id) => {
         getDocs(ref).then(r => {
             let updatedDocElement = r.docs.find(element => element.data().id === id);
@@ -83,6 +97,7 @@ const TodoList = () => {
         })
     }
 
+
     const showModal = () => {
         setModal(true)
     }
@@ -91,6 +106,10 @@ const TodoList = () => {
         setModal(false)
     }
 
+    /**
+     * Сохранение задачи в БД
+     * @param obj объект задачи
+     */
     const addTodo = (obj) => {
         addDoc(ref, obj).then(() => {
             todoList.push(obj)

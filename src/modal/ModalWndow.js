@@ -16,6 +16,10 @@ const ModalWindow = (props) => {
     const inputData = useRef()
     const inputFile = useRef()
 
+
+    /**
+     * сохранение файла в БД
+     */
     const addFile = () => {
        setSaveEnable(true)
         let fileName = inputFile.current.files[0].name;
@@ -41,7 +45,9 @@ const ModalWindow = (props) => {
         }
     }, [props.updateTodoItem]);
 
-
+    /**
+     * создание объекта задачи или редактирование изменений задачи
+     */
     const saveTodo = () => {
         if (props.updateTodoItem?.id) {
             let objTodo = {
@@ -67,7 +73,10 @@ const ModalWindow = (props) => {
             props.addTodo(objTodo);
         }
     }
-
+    /**
+     * проверка не пустого заголовка задачи
+     * @param e - event
+     */
     const titleOnChange = (e) => {
       if (e.target.value.length > 0) {
           setSaveEnable(false)
@@ -76,6 +85,9 @@ const ModalWindow = (props) => {
       }
     }
 
+    /**
+     * очищение полей ввода
+     */
     const clearData = () => {
         inputTitle.current.value = '';
         inputDescription.current.value ='';

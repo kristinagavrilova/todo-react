@@ -5,11 +5,16 @@ import dayjs from "dayjs";
 const TodoListItem = (props) => {
 
     const {id, title, description, deadline,isDone,fileUrl} = props.todoItem
-    
+
+
     const downlandFile = () => {
         window.open(fileUrl)
     }
 
+    /**
+     * получение стилей для разного статуса задачи
+     * @returns {string} - className
+     */
     const getLiClass = () => {
         let classArr = ['liToDo']
         if (isDone) {
