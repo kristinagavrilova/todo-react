@@ -2,7 +2,7 @@ import './../styles/modal.less';
 import CloseIcon from "../icons/CloseIcon";
 import {v4 as uuidv4} from 'uuid';
 import {useEffect, useRef, useState} from "react";
-import {storage} from "../firebase";
+import {storage} from "../config/firebase";
 import {uploadBytesResumable, ref, getDownloadURL} from "firebase/storage";
 
 const ModalWindow = (props) => {

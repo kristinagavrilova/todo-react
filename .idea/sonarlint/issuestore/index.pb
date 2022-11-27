@@ -1,13 +1,6 @@
 
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-=
-src/index.css,c/5/c5d38a62d1faae90a2acaa34b79a7ef365c917e4
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4/9/496a238a6afa168dbaf6efd37bb459331589579c
-?
-src/App.test.js,9/2/923703ced91ac38943d37930d9d27a7ebe8f01ad
 M
 config/jest/babelTransform.js,2/4/24f07d636fc8187f136e3da09bc83d53b315c4e1
 K
@@ -42,5 +35,3 @@ E
 src/styles/modal.less,5/f/5fc90b40edfed696a5d79e1351e121dbfad9b6e2
 D
 src/styles/vars.less,c/7/c7baec711a332bd7529d587085286a21cae5683a
-A
-package-lock.json,f/a/fa288d1472d29beccb489a676f68739ad365fc47

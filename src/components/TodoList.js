@@ -2,7 +2,7 @@ import './../styles/modal.less';
 import TodoListItem from "./TodoListItem";
 import {useEffect, useState} from "react";
 import ModalWindow from "../modal/ModalWndow";
-import {firestore} from "../firebase";
+import {firestore} from "../config/firebase";
 import {addDoc, getDocs, deleteDoc, collection, updateDoc} from "firebase/firestore";
 
 const TodoList = () => {
